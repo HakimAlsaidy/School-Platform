@@ -32,5 +32,6 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 CMD ["apache2-foreground"]
 CMD bash -c "php artisan migrate --force && apache2-foreground"
-CMD bash -c "php seed_accounts.php"
 
+CMD bash -c "php artisan migrate --force"
+CMD bash -c "php seed_accounts.php"

@@ -30,10 +30,10 @@ return new class extends Migration
                 SET s.grade_id = c.grade_id
                 WHERE s.classroom_id IS NOT NULL
             ');
-        } elseif ($driver === 'pgsql') {
+} elseif ($driver === 'pgsql') {
             DB::statement('
                 UPDATE students s
-                SET s.grade_id = c.grade_id
+                SET grade_id = c.grade_id
                 FROM classrooms c
                 WHERE s.classroom_id = c.id
                 AND s.classroom_id IS NOT NULL

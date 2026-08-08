@@ -30,4 +30,11 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-CMD ["apache2-foreground"]
+# إضافة مسار Apache إلى PATH لضمان توفر apache2-foreground
+ENV PATH="${PATH}:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+# جعل deploy.sh قابلاً للتنفيذ واستخدامه كأمر بدء
+RUN chmod +x /var/www/html/deploy.sh
+
+# تشغيل الميجرشن والسيدر ثم تشغيل Apache
+CMD ["/var/www/html/deploy.sh"]

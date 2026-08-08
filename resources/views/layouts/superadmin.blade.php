@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -57,6 +57,10 @@
                     <a href="{{ route('superadmin.schools.index') }}" class="text-gray-600 hover:text-indigo-600 transition {{ request()->routeIs('superadmin.schools.*') ? 'text-indigo-600 font-medium' : '' }}">
                         <i class="fas fa-school ml-1"></i>
                         المدارس
+                    </a>
+<a href="{{ route('superadmin.features.index') }}" class="text-gray-600 hover:text-indigo-600 transition {{ request()->routeIs('superadmin.features.*') ? 'text-indigo-600 font-medium' : '' }}">
+                        <i class="fas fa-layer-group ml-1"></i>
+                        الميزات
                     </a>
                     <a href="{{ route('superadmin.subscriptions.index') }}" class="text-gray-600 hover:text-indigo-600 transition {{ request()->routeIs('superadmin.subscriptions.*') ? 'text-indigo-600 font-medium' : '' }}">
                         <i class="fas fa-credit-card ml-1"></i>

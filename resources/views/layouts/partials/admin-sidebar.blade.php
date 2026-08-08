@@ -67,6 +67,25 @@
     <span>الإعلانات</span>
 </a>
 
+<div class="pt-2">
+    <p class="px-4 py-2 text-xs font-semibold text-gray-400 uppercase">الإدارة المدرسية</p>
+    
+    <a href="{{ route('admin.finance.fees') }}" class="sidebar-link {{ request()->routeIs('admin.finance.*') ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-indigo-600">
+        <i class="fas fa-money-bill-wave w-5"></i>
+        <span>الرسوم والمالية</span>
+    </a>
+    
+    <a href="{{ route('admin.library.index') }}" class="sidebar-link {{ request()->routeIs('admin.library.*') ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-indigo-600">
+        <i class="fas fa-book-reader w-5"></i>
+        <span>المكتبة</span>
+    </a>
+    
+    <a href="{{ route('admin.transport.index') }}" class="sidebar-link {{ request()->routeIs('admin.transport.*') ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-indigo-600">
+        <i class="fas fa-bus w-5"></i>
+        <span>النقل المدرسي</span>
+    </a>
+</div>
+
 <a href="{{ route('admin.pending-users') }}" class="sidebar-link {{ request()->routeIs('admin.pending-users') ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-indigo-600 relative">
     <i class="fas fa-user-clock w-5"></i>
     <span>طلبات التسجيل</span>
@@ -76,6 +95,20 @@
         </span>
     @endif
 </a>
+
+<div class="pt-2">
+    <p class="px-4 py-2 text-xs font-semibold text-gray-400 uppercase">الذكاء الاصطناعي</p>
+    
+    <a href="{{ route('ai.analytics') }}" class="sidebar-link {{ request()->routeIs('ai.analytics') ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-indigo-600">
+        <i class="fas fa-brain w-5"></i>
+        <span>التحليلات الذكية</span>
+    </a>
+    
+    <a href="{{ route('ai.assistant') }}" class="sidebar-link {{ request()->routeIs('ai.assistant') ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-indigo-600">
+        <i class="fas fa-robot w-5"></i>
+        <span>المساعد الذكي</span>
+    </a>
+</div>
 
 <div class="pt-2">
     <p class="px-4 py-2 text-xs font-semibold text-gray-400 uppercase">التقارير</p>

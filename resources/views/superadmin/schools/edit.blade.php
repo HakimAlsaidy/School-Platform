@@ -42,7 +42,7 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">النطاق الفرعي</label>
                     <div class="flex items-center gap-2">
-                        <span class="text-gray-500">.{{ config('app.domain', 'schoolpla.test') }}</span>
+                        <span class="text-gray-500">.{{ config('app.domain', 'edulink.test') }}</span>
                         <input type="text" value="{{ $school->subdomain }}" 
                                class="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl bg-gray-50 text-gray-500 font-mono"
                                disabled>

@@ -12,6 +12,15 @@ use App\Http\Controllers\Admin\SubjectController as AdminSubject;
 use App\Http\Controllers\Admin\AnnouncementController as AdminAnnouncement;
 use App\Http\Controllers\Admin\ReportController as AdminReport;
 use App\Http\Controllers\Admin\ScheduleController as AdminSchedule;
+use App\Http\Controllers\Admin\FinanceController as AdminFinance;
+use App\Http\Controllers\Admin\LibraryController as AdminLibrary;
+use App\Http\Controllers\Admin\TransportController as AdminTransport;
+use App\Http\Controllers\Guardian\FinanceController as GuardianFinance;
+use App\Http\Controllers\Guardian\TransportController as GuardianTransport;
+use App\Http\Controllers\Guardian\QuizController as GuardianQuiz;
+use App\Http\Controllers\Teacher\QuestionBankController as TeacherQuestionBank;
+use App\Http\Controllers\Teacher\QuizController as TeacherQuiz;
+use App\Http\Controllers\Teacher\MaterialController as TeacherMaterial;
 use App\Http\Controllers\Teacher\DashboardController as TeacherDashboard;
 use App\Http\Controllers\Teacher\AttendanceController as TeacherAttendance;
 use App\Http\Controllers\Teacher\ScoreController as TeacherScore;
@@ -22,6 +31,7 @@ use App\Http\Controllers\Guardian\DashboardController as GuardianDashboard;
 use App\Http\Controllers\Guardian\StudentController as GuardianStudent;
 use App\Http\Controllers\SuperAdmin\DashboardController as SuperAdminDashboard;
 use App\Http\Controllers\SuperAdmin\SchoolController as SuperAdminSchool;
+use App\Http\Controllers\SuperAdmin\FeatureOverviewController as SuperAdminFeatureOverview;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
@@ -90,6 +100,9 @@ Route::post('/api/check-subdomain', [SchoolRegisterController::class, 'checkSubd
 // مسارات Super Admin
 Route::middleware(['auth', 'superadmin'])->prefix('superadmin')->name('superadmin.')->group(function () {
     Route::get('/dashboard', [SuperAdminDashboard::class, 'index'])->name('dashboard');
+
+    // نظرة عامة على الميزات (الإشراف على استخدام الميزات في جميع المدارس)
+    Route::get('/features', [SuperAdminFeatureOverview::class, 'index'])->name('features.index');
     
     // إدارة المدارس
     Route::patch('/schools/{school}/approve', [SuperAdminSchool::class, 'approve'])->name('schools.approve');
@@ -110,6 +123,20 @@ Route::middleware(['auth', 'superadmin'])->prefix('superadmin')->name('superadmi
     Route::get('/settings', [\App\Http\Controllers\SuperAdmin\SettingController::class, 'index'])->name('settings.index');
     Route::put('/settings', [\App\Http\Controllers\SuperAdmin\SettingController::class, 'update'])->name('settings.update');
     Route::put('/settings/plans', [\App\Http\Controllers\SuperAdmin\SettingController::class, 'updatePlans'])->name('settings.plans');
+});
+
+// مسارات الذكاء الاصطناعي
+Route::middleware(['auth', 'identify.school'])->prefix('ai')->name('ai.')->group(function () {
+    // لوحة التحليلات الذكية
+    Route::get('/analytics', [\App\Http\Controllers\AIController::class, 'analytics'])->name('analytics');
+    Route::get('/analytics/data', [\App\Http\Controllers\AIController::class, 'schoolAnalytics'])->name('analytics.data');
+
+    // المساعد الذكي
+    Route::get('/assistant', [\App\Http\Controllers\AIController::class, 'assistant'])->name('assistant');
+    Route::post('/ask', [\App\Http\Controllers\AIController::class, 'ask'])->name('ask');
+
+    // رؤى طالب
+    Route::get('/students/{student}/insights', [\App\Http\Controllers\AIController::class, 'studentInsights'])->name('students.insights');
 });
 
 // مسارات مشتركة للمستخدمين المسجلين (مع identify.school للمستخدمين العاديين)
@@ -185,7 +212,7 @@ Route::middleware(['auth', 'role:admin', 'identify.school'])->prefix('admin')->n
         Route::post('/export', [AdminReport::class, 'export'])->name('export');
     });
 
-    // الجدول الدراسي
+// الجدول الدراسي
     Route::prefix('schedules')->name('schedules.')->group(function () {
         Route::get('/', [AdminSchedule::class, 'index'])->name('index');
         Route::get('/classrooms', [AdminSchedule::class, 'classrooms'])->name('classrooms');
@@ -195,6 +222,44 @@ Route::middleware(['auth', 'role:admin', 'identify.school'])->prefix('admin')->n
         Route::delete('/{schedule}', [AdminSchedule::class, 'destroy'])->name('destroy');
         Route::post('/copy', [AdminSchedule::class, 'copy'])->name('copy');
         Route::post('/clear', [AdminSchedule::class, 'clearClassroom'])->name('clear');
+    });
+
+    // المالية (الرسوم والمدفوعات والمصروفات)
+    Route::prefix('finance')->name('finance.')->group(function () {
+        Route::get('/fees', [AdminFinance::class, 'fees'])->name('fees');
+        Route::post('/fees', [AdminFinance::class, 'feesStore'])->name('fees.store');
+        Route::put('/fees/{fee}', [AdminFinance::class, 'feesUpdate'])->name('fees.update');
+        Route::delete('/fees/{fee}', [AdminFinance::class, 'feesDestroy'])->name('fees.destroy');
+        Route::post('/fees/{fee}/assign', [AdminFinance::class, 'assignFee'])->name('fees.assign');
+
+        Route::get('/payments', [AdminFinance::class, 'payments'])->name('payments');
+        Route::post('/payments', [AdminFinance::class, 'paymentsStore'])->name('payments.store');
+
+        Route::get('/accounting', [AdminFinance::class, 'accounting'])->name('accounting');
+        Route::post('/expenses', [AdminFinance::class, 'expenseStore'])->name('expenses.store');
+        Route::delete('/expenses/{expense}', [AdminFinance::class, 'expenseDestroy'])->name('expenses.destroy');
+        Route::post('/incomes', [AdminFinance::class, 'incomeStore'])->name('incomes.store');
+        Route::delete('/incomes/{income}', [AdminFinance::class, 'incomeDestroy'])->name('incomes.destroy');
+    });
+
+    // المكتبة
+    Route::prefix('library')->name('library.')->group(function () {
+        Route::get('/', [AdminLibrary::class, 'index'])->name('index');
+        Route::post('/books', [AdminLibrary::class, 'store'])->name('books.store');
+        Route::delete('/books/{book}', [AdminLibrary::class, 'destroy'])->name('books.destroy');
+        Route::post('/loans', [AdminLibrary::class, 'loan'])->name('loans.store');
+        Route::post('/loans/{loan}/return', [AdminLibrary::class, 'returnLoan'])->name('loans.return');
+    });
+
+    // النقل المدرسي
+    Route::prefix('transport')->name('transport.')->group(function () {
+        Route::get('/', [AdminTransport::class, 'index'])->name('index');
+        Route::post('/buses', [AdminTransport::class, 'busStore'])->name('buses.store');
+        Route::delete('/buses/{bus}', [AdminTransport::class, 'busDestroy'])->name('buses.destroy');
+        Route::post('/routes', [AdminTransport::class, 'routeStore'])->name('routes.store');
+        Route::delete('/routes/{route}', [AdminTransport::class, 'routeDestroy'])->name('routes.destroy');
+        Route::post('/students', [AdminTransport::class, 'assignStudent'])->name('students.assign');
+        Route::delete('/students/{transportStudent}', [AdminTransport::class, 'removeStudent'])->name('students.remove');
     });
 });
 
@@ -228,9 +293,34 @@ Route::middleware(['auth', 'role:teacher', 'identify.school'])->prefix('teacher'
     
     // السلوك
     Route::resource('behaviors', TeacherBehavior::class)->except(['show', 'edit', 'update']);
-    
+
     // الجدول الدراسي
     Route::get('/schedule', [TeacherSchedule::class, 'index'])->name('schedule.index');
+
+    // بنك الأسئلة
+    Route::prefix('question-bank')->name('question-bank.')->group(function () {
+        Route::get('/', [TeacherQuestionBank::class, 'index'])->name('index');
+        Route::post('/', [TeacherQuestionBank::class, 'store'])->name('store');
+        Route::delete('/{question}', [TeacherQuestionBank::class, 'destroy'])->name('destroy');
+    });
+
+    // الاختبارات الإلكترونية
+    Route::prefix('quizzes')->name('quizzes.')->group(function () {
+        Route::get('/', [TeacherQuiz::class, 'index'])->name('index');
+        Route::get('/create', [TeacherQuiz::class, 'create'])->name('create');
+        Route::post('/', [TeacherQuiz::class, 'store'])->name('store');
+        Route::get('/{quiz}', [TeacherQuiz::class, 'show'])->name('show');
+        Route::post('/{quiz}/toggle', [TeacherQuiz::class, 'togglePublish'])->name('toggle');
+        Route::post('/{quiz}/import', [TeacherQuiz::class, 'importFromBank'])->name('import');
+        Route::delete('/{quiz}', [TeacherQuiz::class, 'destroy'])->name('destroy');
+    });
+
+    // المواد الدراسية
+    Route::prefix('materials')->name('materials.')->group(function () {
+        Route::get('/', [TeacherMaterial::class, 'index'])->name('index');
+        Route::post('/', [TeacherMaterial::class, 'store'])->name('store');
+        Route::delete('/{material}', [TeacherMaterial::class, 'destroy'])->name('destroy');
+    });
 });
 
 // مسارات ولي الأمر - مع فلتر المدرسة
@@ -245,5 +335,23 @@ Route::middleware(['auth', 'role:parent', 'identify.school'])->prefix('parent')-
         Route::get('/{student}/scores', [GuardianStudent::class, 'scores'])->name('scores');
         Route::get('/{student}/behaviors', [GuardianStudent::class, 'behaviors'])->name('behaviors');
         Route::get('/{student}/schedule', [GuardianStudent::class, 'schedule'])->name('schedule');
+    });
+
+    // الرسوم والمدفوعات
+    Route::prefix('finance')->name('finance.')->group(function () {
+        Route::get('/fees', [GuardianFinance::class, 'fees'])->name('fees');
+        Route::post('/fees/{studentFee}/pay', [GuardianFinance::class, 'pay'])->name('fees.pay');
+        Route::get('/payments', [GuardianFinance::class, 'payments'])->name('payments');
+    });
+
+    // النقل المدرسي
+    Route::get('/transport', [GuardianTransport::class, 'index'])->name('transport.index');
+
+    // الاختبارات الإلكترونية
+    Route::prefix('quizzes')->name('quizzes.')->group(function () {
+        Route::get('/{student}', [GuardianQuiz::class, 'index'])->name('index');
+        Route::get('/{student}/{quiz}', [GuardianQuiz::class, 'show'])->name('show');
+        Route::post('/{student}/{quiz}/submit', [GuardianQuiz::class, 'submit'])->name('submit');
+        Route::get('/{student}/results/{attempt}', [GuardianQuiz::class, 'results'])->name('results');
     });
 });

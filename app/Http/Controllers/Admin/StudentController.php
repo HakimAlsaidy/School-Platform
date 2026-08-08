@@ -158,7 +158,7 @@ class StudentController extends Controller
         // إنشاء مستخدم جديد
         $user = \App\Models\User::create([
             'name' => $validated['name'],
-            'email' => $validated['phone'] . '@temp.schoolpla.com',
+            'email' => $validated['phone'] . '@temp.edulink.com',
             'phone' => $validated['phone'],
             'password' => bcrypt($validated['password']),
             'role_id' => \App\Models\Role::where('name', 'parent')->first()->id ?? 4,

@@ -12,13 +12,14 @@ class Guardian extends Model
 {
     use HasFactory, UsesSchoolSchema;
 
-    protected $fillable = [
+protected $fillable = [
         'school_id',
         'user_id',
         'name',
         'phone',
         'email',
         'relation',
+        'relationship',
         'occupation',
         'address',
         'emergency_phone',

@@ -30,6 +30,39 @@
 </a>
 
 <div class="pt-2">
+    <p class="px-4 py-2 text-xs font-semibold text-gray-400 uppercase">التدريس</p>
+    
+    <a href="{{ route('teacher.question-bank.index') }}" class="sidebar-link {{ request()->routeIs('teacher.question-bank.*') ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-indigo-600">
+        <i class="fas fa-question-circle w-5"></i>
+        <span>بنك الأسئلة</span>
+    </a>
+    
+    <a href="{{ route('teacher.quizzes.index') }}" class="sidebar-link {{ request()->routeIs('teacher.quizzes.*') ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-indigo-600">
+        <i class="fas fa-clipboard-list w-5"></i>
+        <span>الاختبارات الإلكترونية</span>
+    </a>
+    
+    <a href="{{ route('teacher.materials.index') }}" class="sidebar-link {{ request()->routeIs('teacher.materials.*') ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-indigo-600">
+        <i class="fas fa-folder-open w-5"></i>
+        <span>المواد الدراسية</span>
+    </a>
+</div>
+
+<div class="pt-2">
+    <p class="px-4 py-2 text-xs font-semibold text-gray-400 uppercase">الذكاء الاصطناعي</p>
+    
+    <a href="{{ route('ai.analytics') }}" class="sidebar-link {{ request()->routeIs('ai.analytics') ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-indigo-600">
+        <i class="fas fa-brain w-5"></i>
+        <span>التحليلات الذكية</span>
+    </a>
+    
+    <a href="{{ route('ai.assistant') }}" class="sidebar-link {{ request()->routeIs('ai.assistant') ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-indigo-600">
+        <i class="fas fa-robot w-5"></i>
+        <span>المساعد الذكي</span>
+    </a>
+</div>
+
+<div class="pt-2">
     <p class="px-4 py-2 text-xs font-semibold text-gray-400 uppercase">التقارير</p>
     
     <a href="{{ route('teacher.attendance.report') }}" class="sidebar-link {{ request()->routeIs('teacher.attendance.report') ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-indigo-600">

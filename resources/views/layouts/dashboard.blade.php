@@ -79,7 +79,7 @@
                             <div class="w-9 h-9 gradient-bg rounded-lg flex items-center justify-center">
                                 <i class="fas fa-graduation-cap text-white text-sm"></i>
                             </div>
-                            <span class="font-bold text-gray-800">SchoolPla</span>
+                            <span class="font-bold text-gray-800">إيدو لينك</span>
                         </a>
                     </div>
 
@@ -384,4 +384,7 @@
 </nav>
 
 {{-- No sidebar toggle script needed - mobile navbar handles navigation --}}
+
+{{-- AI Assistant Floating Widget --}}
+@include('components.ai-widget')
 @endsection

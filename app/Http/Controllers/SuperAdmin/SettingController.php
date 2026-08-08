@@ -15,9 +15,9 @@ class SettingController extends Controller
     public function index()
     {
         $settings = [
-            'platform_name' => config('app.name', 'SchoolPla'),
+            'platform_name' => config('app.name', 'إيدو لينك'),
             'platform_description' => Cache::get('platform_description', 'منصة إدارة المدارس الذكية'),
-            'contact_email' => Cache::get('contact_email', 'support@schoolpla.com'),
+            'contact_email' => Cache::get('contact_email', 'support@edulink.com'),
             'contact_phone' => Cache::get('contact_phone', '920000000'),
             'auto_approve_schools' => Cache::get('auto_approve_schools', false),
             'trial_days' => Cache::get('trial_days', 30),

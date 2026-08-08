@@ -10,5 +10,34 @@
 </a>
 
 <div class="pt-2">
+    <p class="px-4 py-2 text-xs font-semibold text-gray-400 uppercase">الذكاء الاصطناعي</p>
+    
+    <a href="{{ route('ai.analytics') }}" class="sidebar-link {{ request()->routeIs('ai.analytics') ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-indigo-600">
+        <i class="fas fa-brain w-5"></i>
+        <span>تحليل الأداء</span>
+    </a>
+    
+    <a href="{{ route('ai.assistant') }}" class="sidebar-link {{ request()->routeIs('ai.assistant') ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-indigo-600">
+        <i class="fas fa-robot w-5"></i>
+        <span>المساعد الذكي</span>
+    </a>
+</div>
+
+<div class="pt-2">
     <p class="px-4 py-2 text-xs font-semibold text-gray-400 uppercase">متابعة</p>
+    
+    <a href="{{ route('parent.finance.fees') }}" class="sidebar-link {{ request()->routeIs('parent.finance.*') ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-indigo-600">
+        <i class="fas fa-money-bill-wave w-5"></i>
+        <span>الرسوم والمدفوعات</span>
+    </a>
+    
+    <a href="{{ route('parent.transport.index') }}" class="sidebar-link {{ request()->routeIs('parent.transport.*') ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-indigo-600">
+        <i class="fas fa-bus w-5"></i>
+        <span>النقل المدرسي</span>
+    </a>
+    
+    <a href="{{ route('parent.quizzes.index', Auth::user()->guardian->students()->first()->id ?? 0) }}" class="sidebar-link {{ request()->routeIs('parent.quizzes.*') ? 'active' : '' }} flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:text-indigo-600">
+        <i class="fas fa-clipboard-list w-5"></i>
+        <span>الاختبارات</span>
+    </a>
 </div>

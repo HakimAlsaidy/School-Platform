@@ -81,7 +81,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4">
-                                <a href="http://{{ $school->subdomain }}.{{ config('app.domain', 'schoolpla.test') }}" 
+                                <a href="http://{{ $school->subdomain }}.{{ config('app.domain', 'edulink.test') }}" 
                                    target="_blank" class="text-indigo-600 hover:text-indigo-700 font-mono text-sm">
                                     {{ $school->subdomain }}
                                 </a>

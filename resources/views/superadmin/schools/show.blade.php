@@ -21,7 +21,7 @@
                 @endif
                 <div>
                     <h1 class="text-2xl font-bold text-gray-800">{{ $school->name }}</h1>
-                    <p class="text-gray-500 font-mono">{{ $school->subdomain }}.{{ config('app.domain', 'schoolpla.test') }}</p>
+                    <p class="text-gray-500 font-mono">{{ $school->subdomain }}.{{ config('app.domain', 'edulink.test') }}</p>
                 </div>
             </div>
         </div>

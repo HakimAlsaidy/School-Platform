@@ -7,7 +7,7 @@
                 <div class="w-8 h-8 sm:w-10 sm:h-10 gradient-bg rounded-lg sm:rounded-xl flex items-center justify-center">
                     <i class="fas fa-graduation-cap text-white text-sm sm:text-lg"></i>
                 </div>
-                <span class="text-lg sm:text-xl font-bold text-gray-800">SchoolPla</span>
+                <span class="text-lg sm:text-xl font-bold text-gray-800">إيدو لينك</span>
             </a>
             
             <!-- Desktop Navigation -->

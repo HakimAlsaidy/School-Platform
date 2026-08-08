@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>تسجيل مدرسة جديدة - SchoolPla</title>
+<title>تسجيل مدرسة جديدة - إيدو لينك</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -42,7 +42,7 @@
                     <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center">
                         <i class="fas fa-graduation-cap text-white"></i>
                     </div>
-                    <span class="font-bold text-xl text-gray-800">SchoolPla</span>
+<span class="font-bold text-xl text-gray-800">إيدو لينك</span>
                 </a>
             </div>
         </header>
@@ -53,7 +53,7 @@
                 <!-- Title -->
                 <div class="text-center mb-8">
                     <h1 class="text-3xl font-bold text-gray-800 mb-2">سجّل مدرستك الآن</h1>
-                    <p class="text-gray-600">انضم إلى منصة SchoolPla وابدأ في إدارة مدرستك بسهولة</p>
+                    <p class="text-gray-600">انضم إلى منصة إيدو لينك وابدأ في إدارة مدرستك بسهولة</p>
                 </div>
 
                 <!-- Steps -->
@@ -118,7 +118,7 @@
                                            placeholder="alnoor"
                                            pattern="[a-z0-9-]+"
                                            required>
-                                    <span class="px-4 py-3 bg-gray-50 text-gray-500 border-r border-gray-200">.schoolpla.com</span>
+<span class="px-4 py-3 bg-gray-50 text-gray-500 border-r border-gray-200">.edulink.test</span>
                                 </div>
                                 <p class="text-gray-500 text-sm mt-1">أحرف إنجليزية صغيرة وأرقام فقط</p>
                                 @error('subdomain')
@@ -332,7 +332,7 @@
         <!-- Footer -->
         <footer class="bg-white border-t border-gray-200 py-4">
             <div class="max-w-6xl mx-auto px-4 text-center text-gray-500 text-sm">
-                © {{ date('Y') }} SchoolPla - جميع الحقوق محفوظة
+                © {{ date('Y') }} إيدو لينك - جميع الحقوق محفوظة
             </div>
         </footer>
     </div>

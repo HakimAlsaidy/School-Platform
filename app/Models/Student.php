@@ -68,6 +68,31 @@ class Student extends Model
         return $this->hasMany(AssignmentSubmission::class);
     }
 
+    public function studentFees(): HasMany
+    {
+        return $this->hasMany(StudentFee::class);
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function transportAssignments(): HasMany
+    {
+        return $this->hasMany(TransportStudent::class);
+    }
+
+    public function bookLoans(): HasMany
+    {
+        return $this->hasMany(BookLoan::class);
+    }
+
+    public function quizAttempts(): HasMany
+    {
+        return $this->hasMany(QuizAttempt::class);
+    }
+
     public function getAverageScoreAttribute(): float
     {
         return $this->scores()->avg('score') ?? 0;

@@ -199,7 +199,7 @@
             </div>
         </a>
 
-        <a href="#" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-2xl p-6 hover:shadow-lg transition group">
+<a href="{{ route('superadmin.reports.index') }}" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-2xl p-6 hover:shadow-lg transition group">
             <div class="flex items-center gap-4">
                 <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition">
                     <i class="fas fa-chart-bar text-xl"></i>
@@ -211,7 +211,19 @@
             </div>
         </a>
 
-        <a href="#" class="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-2xl p-6 hover:shadow-lg transition group">
+        <a href="{{ route('superadmin.features.index') }}" class="bg-gradient-to-r from-purple-500 to-fuchsia-600 text-white rounded-2xl p-6 hover:shadow-lg transition group">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition">
+                    <i class="fas fa-layer-group text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold">الميزات</h3>
+                    <p class="text-sm text-white/80">نظرة عامة على الوحدات</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="{{ route('superadmin.settings.index') }}" class="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-2xl p-6 hover:shadow-lg transition group">
             <div class="flex items-center gap-4">
                 <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition">
                     <i class="fas fa-cog text-xl"></i>

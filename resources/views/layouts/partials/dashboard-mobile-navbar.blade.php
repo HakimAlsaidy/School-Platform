@@ -106,15 +106,27 @@
                     <i class="fas fa-layer-group w-5 text-center"></i>
                     <span>الصفوف</span>
                 </a>
-                <a href="{{ route('admin.announcements.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.announcements.*') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+<a href="{{ route('admin.announcements.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.announcements.*') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
                     <i class="fas fa-bullhorn w-5 text-center"></i>
                     <span>الإعلانات</span>
+                </a>
+                <a href="{{ route('admin.finance.fees') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.finance.*') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+                    <i class="fas fa-money-bill-wave w-5 text-center"></i>
+                    <span>الرسوم والمالية</span>
+                </a>
+                <a href="{{ route('admin.library.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.library.*') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+                    <i class="fas fa-book-reader w-5 text-center"></i>
+                    <span>المكتبة</span>
+                </a>
+                <a href="{{ route('admin.transport.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.transport.*') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+                    <i class="fas fa-bus w-5 text-center"></i>
+                    <span>النقل المدرسي</span>
                 </a>
                 <a href="{{ route('admin.reports.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.reports.*') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
                     <i class="fas fa-chart-bar w-5 text-center"></i>
                     <span>التقارير</span>
                 </a>
-                <a href="{{ route('admin.pending-users') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.pending-users') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition relative" onclick="closeDashboardMobileNav()">
+<a href="{{ route('admin.pending-users') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.pending-users') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition relative" onclick="closeDashboardMobileNav()">
                     <i class="fas fa-user-clock w-5 text-center"></i>
                     <span>طلبات التسجيل</span>
                     @if(isset($pendingUsersCount) && $pendingUsersCount > 0)
@@ -122,6 +134,14 @@
                             {{ $pendingUsersCount }}
                         </span>
                     @endif
+                </a>
+                <a href="{{ route('ai.analytics') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('ai.analytics') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+                    <i class="fas fa-brain w-5 text-center"></i>
+                    <span>التحليلات الذكية</span>
+                </a>
+                <a href="{{ route('ai.assistant') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('ai.assistant') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+                    <i class="fas fa-robot w-5 text-center"></i>
+                    <span>المساعد الذكي</span>
                 </a>
                 
             @elseif(auth()->user()->isTeacher())
@@ -142,9 +162,29 @@
                     <i class="fas fa-tasks w-5 text-center"></i>
                     <span>الواجبات</span>
                 </a>
-                <a href="{{ route('teacher.behaviors.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('teacher.behaviors.*') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+<a href="{{ route('teacher.behaviors.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('teacher.behaviors.*') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
                     <i class="fas fa-user-check w-5 text-center"></i>
                     <span>السلوك</span>
+                </a>
+                <a href="{{ route('teacher.question-bank.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('teacher.question-bank.*') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+                    <i class="fas fa-question-circle w-5 text-center"></i>
+                    <span>بنك الأسئلة</span>
+                </a>
+                <a href="{{ route('teacher.quizzes.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('teacher.quizzes.*') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+                    <i class="fas fa-clipboard-list w-5 text-center"></i>
+                    <span>الاختبارات الإلكترونية</span>
+                </a>
+                <a href="{{ route('teacher.materials.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('teacher.materials.*') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+                    <i class="fas fa-folder-open w-5 text-center"></i>
+                    <span>المواد الدراسية</span>
+                </a>
+                <a href="{{ route('ai.analytics') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('ai.analytics') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+                    <i class="fas fa-brain w-5 text-center"></i>
+                    <span>التحليلات الذكية</span>
+                </a>
+                <a href="{{ route('ai.assistant') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('ai.assistant') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+                    <i class="fas fa-robot w-5 text-center"></i>
+                    <span>المساعد الذكي</span>
                 </a>
                 
             @elseif(auth()->user()->isParent())
@@ -153,9 +193,29 @@
                     <i class="fas fa-home w-5 text-center"></i>
                     <span>الرئيسية</span>
                 </a>
-                <a href="{{ route('parent.students.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('parent.students.*') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+<a href="{{ route('parent.students.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('parent.students.*') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
                     <i class="fas fa-child w-5 text-center"></i>
                     <span>أبنائي</span>
+                </a>
+                <a href="{{ route('parent.finance.fees') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('parent.finance.*') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+                    <i class="fas fa-money-bill-wave w-5 text-center"></i>
+                    <span>الرسوم والمدفوعات</span>
+                </a>
+                <a href="{{ route('parent.transport.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('parent.transport.*') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+                    <i class="fas fa-bus w-5 text-center"></i>
+                    <span>النقل المدرسي</span>
+                </a>
+                <a href="{{ route('parent.quizzes.index', Auth::user()->guardian->students()->first()->id ?? 0) }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('parent.quizzes.*') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+                    <i class="fas fa-clipboard-list w-5 text-center"></i>
+                    <span>الاختبارات</span>
+                </a>
+                <a href="{{ route('ai.analytics') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('ai.analytics') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+                    <i class="fas fa-brain w-5 text-center"></i>
+                    <span>تحليل الأداء</span>
+                </a>
+                <a href="{{ route('ai.assistant') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('ai.assistant') ? 'bg-indigo-100 text-indigo-700' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600' }} transition" onclick="closeDashboardMobileNav()">
+                    <i class="fas fa-robot w-5 text-center"></i>
+                    <span>المساعد الذكي</span>
                 </a>
             @endif
             

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تم التسجيل بنجاح - SchoolPla</title>
+<title>تم التسجيل بنجاح - إيدو لينك</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -53,7 +53,7 @@
             <!-- Title -->
             <h1 class="text-2xl font-bold text-gray-800 mb-3">تم إرسال طلبك بنجاح!</h1>
             <p class="text-gray-600 mb-6">
-                شكراً لتسجيل مدرسة <strong>{{ session('school_name') }}</strong> في منصة SchoolPla
+شكراً لتسجيل مدرسة <strong>{{ session('school_name') }}</strong> في منصة إيدو لينك
             </p>
 
             <!-- Steps -->
@@ -79,7 +79,7 @@
             <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-4 mb-6">
                 <p class="text-sm text-gray-600 mb-2">رابط مدرستك سيكون:</p>
                 <p class="font-mono text-indigo-600 font-bold text-lg" dir="ltr">
-                    {{ session('subdomain') }}.schoolpla.com
+{{ session('subdomain') }}.edulink.test
                 </p>
             </div>
 

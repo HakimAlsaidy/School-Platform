@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="منصة المدرسة التعليمية - نظام متكامل لإدارة العملية التعليمية">
     <meta name="keywords" content="مدرسة, تعليم, إدارة, طلاب, معلمين, أولياء أمور">
-    <meta name="author" content="SchoolPla">
+<meta name="author" content="إيدو لينك">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>منصة المدرسة التعليمية | SchoolPla</title>
+    <title>منصة المدرسة التعليمية | إيدو لينك</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -149,7 +149,7 @@
                     <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center">
                         <i class="fas fa-graduation-cap text-white text-lg"></i>
                     </div>
-                    <span class="text-xl font-bold text-gray-800">SchoolPla</span>
+<span class="text-xl font-bold text-gray-800">إيدو لينك</span>
                 </div>
                 
                 <!-- Nav Links (Desktop) -->
@@ -354,7 +354,7 @@
                         نبني مستقبل التعليم الرقمي
                     </h2>
                     <p class="text-gray-600 leading-relaxed mb-6">
-                        منصة SchoolPla هي نتاج سنوات من الخبرة في مجال التعليم والتقنية. نسعى لتقديم حلول مبتكرة تسهّل العملية التعليمية وتعزز التواصل بين جميع أطراف المنظومة التعليمية.
+منصة إيدو لينك هي نتاج سنوات من الخبرة في مجال التعليم والتقنية. نسعى لتقديم حلول مبتكرة تسهّل العملية التعليمية وتعزز التواصل بين جميع أطراف المنظومة التعليمية.
                     </p>
                     <p class="text-gray-600 leading-relaxed mb-8">
                         فريقنا يضم نخبة من المتخصصين في التعليم والبرمجة وتجربة المستخدم، نعمل معاً لتحقيق هدف واحد: جعل التعليم أسهل وأكثر فعالية للجميع.
@@ -751,7 +751,7 @@
                         <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center">
                             <i class="fas fa-graduation-cap text-white text-xl"></i>
                         </div>
-                        <span class="text-2xl font-bold">SchoolPla</span>
+<span class="text-2xl font-bold">إيدو لينك</span>
                     </div>
                     <p class="text-gray-400 leading-relaxed">
                         منصة تعليمية متكاملة تهدف إلى تسهيل العملية التعليمية وتعزيز التواصل بين جميع الأطراف
@@ -800,15 +800,15 @@
                     <ul class="space-y-4 text-gray-400">
                         <li class="flex items-start gap-3">
                             <i class="fas fa-map-marker-alt mt-1 text-indigo-400"></i>
-                            <span>المملكة العربية السعودية<br>الرياض - حي العليا</span>
+                            <span>الجمهورية اليمنية<br>صنعاء - اليمن </span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fas fa-envelope text-indigo-400"></i>
-                            info@schoolpla.com
+info@edulink.com
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fas fa-phone text-indigo-400"></i>
-                            <span dir="ltr">+966 XX XXX XXXX</span>
+                            <span dir="ltr">+967 778026847</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fas fa-clock text-indigo-400"></i>
@@ -835,7 +835,7 @@
             </div>
             
             <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-gray-500 text-sm">
-                <p>© {{ date('Y') }} SchoolPla. جميع الحقوق محفوظة.</p>
+<p>© {{ date('Y') }} إيدو لينك. جميع الحقوق محفوظة.</p>
                 <div class="flex gap-6">
                     <a href="#" class="hover:text-white transition">سياسة الخصوصية</a>
                     <a href="#" class="hover:text-white transition">شروط الاستخدام</a>

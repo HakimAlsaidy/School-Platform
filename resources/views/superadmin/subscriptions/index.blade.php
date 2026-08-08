@@ -119,7 +119,7 @@
                                  class="w-10 h-10 rounded-xl object-cover">
                             <div>
                                 <p class="font-semibold text-gray-800">{{ $subscription->school->name }}</p>
-                                <p class="text-sm text-gray-500">{{ $subscription->school->subdomain }}.schoolpla.com</p>
+                                <p class="text-sm text-gray-500">{{ $subscription->school->subdomain }}.edulink.com</p>
                             </div>
                         </div>
                     </td>

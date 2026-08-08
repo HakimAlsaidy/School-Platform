@@ -13,7 +13,19 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+'name' => env('APP_NAME', 'إيدو لينك'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Domain
+    |--------------------------------------------------------------------------
+    |
+    | This value is the main domain used for the multi-tenant subdomain system.
+    | Each school gets a subdomain like: school1.edulink.test
+    |
+    */
+
+    'domain' => env('APP_DOMAIN', 'edulink.test'),
 
     /*
     |--------------------------------------------------------------------------

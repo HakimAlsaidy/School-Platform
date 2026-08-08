@@ -20,13 +20,25 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        // تحديث الطلاب الحاليين - ربطهم بالصفوف من خلال الفصول
-        DB::statement('
-            UPDATE students s
-            INNER JOIN classrooms c ON s.classroom_id = c.id
-            SET s.grade_id = c.grade_id
-            WHERE s.classroom_id IS NOT NULL
-        ');
+// تحديث الطلاب الحاليين - ربطهم بالصفوف من خلال الفصول
+        $driver = DB::connection()->getDriverName();
+
+        if ($driver === 'mysql' || $driver === 'mariadb') {
+            DB::statement('
+                UPDATE students s
+                INNER JOIN classrooms c ON s.classroom_id = c.id
+                SET s.grade_id = c.grade_id
+                WHERE s.classroom_id IS NOT NULL
+            ');
+        } elseif ($driver === 'pgsql') {
+            DB::statement('
+                UPDATE students s
+                SET s.grade_id = c.grade_id
+                FROM classrooms c
+                WHERE s.classroom_id = c.id
+                AND s.classroom_id IS NOT NULL
+            ');
+        }
 
         // جعل classroom_id قابل للـ null وتغيير onDelete
         Schema::table('students', function (Blueprint $table) {

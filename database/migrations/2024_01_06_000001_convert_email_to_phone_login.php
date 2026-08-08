@@ -24,10 +24,18 @@ return new class extends Migration
             }
         });
 
-        // 2. تحديث البيانات الموجودة - نقل البريد إلى رقم هاتف وهمي إذا لم يكن موجود
-        DB::table('users')->whereNull('phone')->orWhere('phone', '')->update([
-            'phone' => DB::raw("CONCAT('05', LPAD(id, 8, '0'))")
-        ]);
+// 2. تحديث البيانات الموجودة - نقل البريد إلى رقم هاتف وهمي إذا لم يكن موجود
+        $driver = DB::connection()->getDriverName();
+
+        if ($driver === 'mysql' || $driver === 'mariadb') {
+            DB::table('users')->whereNull('phone')->orWhere('phone', '')->update([
+                'phone' => DB::raw("CONCAT('05', LPAD(id, 8, '0'))")
+            ]);
+        } elseif ($driver === 'pgsql') {
+            DB::table('users')->whereNull('phone')->orWhere('phone', '')->update([
+                'phone' => DB::raw("CONCAT('05', LPAD(id::text, 8, '0'))")
+            ]);
+        }
 
         // 3. جعل رقم الهاتف فريد
         Schema::table('users', function (Blueprint $table) {

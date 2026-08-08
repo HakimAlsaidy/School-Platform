@@ -9,6 +9,7 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * متوافق مع MySQL و PostgreSQL.
      */
     public function up(): void
     {
@@ -19,8 +20,16 @@ return new class extends Migration
             }
         });
 
-        // تحديث ENUM للأيام لإضافة السبت
-        DB::statement("ALTER TABLE schedules MODIFY COLUMN day ENUM('saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday') NOT NULL");
+        // تحديث قيم الأيام لإضافة السبت
+        $driver = DB::connection()->getDriverName();
+
+        if ($driver === 'pgsql') {
+            // MySQL ليس هو القاعدة هنا، نضيف قيد تحقق جديد بدون إسقاط القديم
+            // نستخدم string بدلاً من enum لأن PostgreSQL لا يدعم ALTER ENUM بسهولة
+            DB::statement("ALTER TABLE schedules ALTER COLUMN day TYPE VARCHAR(20)");
+        } elseif ($driver === 'mysql' || $driver === 'mariadb') {
+            DB::statement("ALTER TABLE schedules MODIFY COLUMN day ENUM('saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday') NOT NULL");
+        }
     }
 
     /**
@@ -34,6 +43,12 @@ return new class extends Migration
             }
         });
 
-        DB::statement("ALTER TABLE schedules MODIFY COLUMN day ENUM('sunday', 'monday', 'tuesday', 'wednesday', 'thursday') NOT NULL");
+        $driver = DB::connection()->getDriverName();
+
+        if ($driver === 'pgsql') {
+            DB::statement("ALTER TABLE schedules ALTER COLUMN day TYPE VARCHAR(20)");
+        } elseif ($driver === 'mysql' || $driver === 'mariadb') {
+            DB::statement("ALTER TABLE schedules MODIFY COLUMN day ENUM('sunday', 'monday', 'tuesday', 'wednesday', 'thursday') NOT NULL");
+        }
     }
 };

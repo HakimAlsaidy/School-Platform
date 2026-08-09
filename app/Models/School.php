@@ -29,9 +29,19 @@ class School extends Model
         'max_teachers',
         'license_expires_at',
         'is_active',
-        'is_verified',
+'is_verified',
         'settings',
         'notes',
+        // حقول الأمان والتوثيق
+        'verification_code',
+        'verification_expires_at',
+        'verified_at',
+        'registration_ip',
+        'registration_user_agent',
+        'registration_completed_at',
+        'rejection_reason',
+        'approved_by',
+        'approved_at',
     ];
 
     protected function casts(): array

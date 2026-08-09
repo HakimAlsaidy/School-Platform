@@ -11,7 +11,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -22,12 +24,18 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        // Rate Limiting: منع محاولات تسجيل الدخول المتكررة (حماية من الهجمات)
+        $this->ensureIsNotRateLimited($request);
+
         $credentials = $request->validate([
             'phone' => ['required', 'string'],
             'password' => ['required'],
         ]);
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
+            // تصفير محاولات تسجيل الدخول عند النجاح
+            RateLimiter::clear($this->throttleKey($request));
+
             $request->session()->regenerate();
 
             if (!auth()->user()->is_active) {
@@ -42,9 +50,39 @@ class AuthController extends Controller
             return $this->redirectBasedOnRole();
         }
 
-        return back()->withErrors([
-            'phone' => 'البيانات المدخلة غير صحيحة.',
-        ])->onlyInput('phone');
+        // تسجيل المحاولة الفاشلة
+        RateLimiter::hit($this->throttleKey($request), 60 * 60);
+
+        throw ValidationException::withMessages([
+            'phone' => trans('auth.failed'),
+        ]);
+    }
+
+    /**
+     * التحقق من عدم تجاوز حد المحاولات المسموح
+     */
+    protected function ensureIsNotRateLimited(Request $request): void
+    {
+        if (! RateLimiter::tooManyAttempts($this->throttleKey($request), 5)) {
+            return;
+        }
+
+        $seconds = RateLimiter::availableIn($this->throttleKey($request));
+
+        throw ValidationException::withMessages([
+            'phone' => trans('auth.throttle', [
+                'seconds' => $seconds,
+                'minutes' => ceil($seconds / 60),
+            ]),
+        ]);
+    }
+
+    /**
+     * مفتاح تحديد المحاولات (IP + هاتف)
+     */
+    protected function throttleKey(Request $request): string
+    {
+        return mb_strtolower($request->input('phone') . '|' . $request->ip());
     }
 
     public function logout(Request $request)

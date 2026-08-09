@@ -56,7 +56,7 @@
 شكراً لتسجيل مدرسة <strong>{{ session('school_name') }}</strong> في منصة إيدو لينك
             </p>
 
-            <!-- Steps -->
+<!-- Steps -->
             <div class="bg-gray-50 rounded-xl p-6 mb-6 text-right">
                 <h3 class="font-bold text-gray-800 mb-4">الخطوات التالية:</h3>
                 <div class="space-y-3">
@@ -83,6 +83,20 @@
                 </p>
             </div>
 
+            <!-- Trial Info -->
+            <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-6 text-right">
+                <div class="flex items-start gap-3">
+                    <i class="fas fa-gift text-emerald-500 mt-1"></i>
+                    <div>
+                        <p class="text-emerald-800 font-medium">فترة تجريبية مجانية</p>
+                        <p class="text-emerald-700 text-sm">
+                            ستحصل على فترة تجريبية مجانية لمدة <strong>30 يوماً</strong> بعد تفعيل حسابك،
+                            لتجربة جميع مزايا منصة إيدو لينك.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Info Box -->
             <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-right">
                 <div class="flex items-start gap-3">
@@ -91,7 +105,21 @@
                         <p class="text-amber-800 font-medium">ملاحظة مهمة</p>
                         <p class="text-amber-700 text-sm">
                             عادة ما تتم مراجعة الطلبات خلال 24-48 ساعة في أيام العمل.
-                            احتفظ ببيانات تسجيل الدخول الخاصة بك.
+                            احتفظ ببيانات تسجيل الدخول الخاصة بك في مكان آمن ولا تشاركها مع أي شخص.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Note -->
+            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6 text-right">
+                <div class="flex items-start gap-3">
+                    <i class="fas fa-shield-alt text-blue-500 mt-1"></i>
+                    <div>
+                        <p class="text-blue-800 font-medium">حماية حسابك</p>
+                        <p class="text-blue-700 text-sm">
+                            لأمانك، ننصح بتغيير كلمة المرور بعد أول تسجيل دخول،
+                            وتفعيل كلمة مرور قوية تحتوي على أحرف وأرقام ورموز خاصة.
                         </p>
                     </div>
                 </div>

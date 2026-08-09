@@ -132,7 +132,7 @@
                                         <i class="fas fa-edit text-sm"></i>
                                     </a>
                                     
-                                    @if(!$school->is_verified)
+@if(!$school->is_verified)
                                         <form action="{{ route('superadmin.schools.approve', $school) }}" method="POST" class="inline">
                                             @csrf
                                             @method('PATCH')
@@ -142,16 +142,12 @@
                                                 <i class="fas fa-check text-sm"></i>
                                             </button>
                                         </form>
-                                        <form action="{{ route('superadmin.schools.reject', $school) }}" method="POST" class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" 
-                                                    class="w-8 h-8 bg-red-100 text-red-600 rounded-lg flex items-center justify-center hover:bg-red-200 transition"
-                                                    title="رفض"
-                                                    onclick="return confirm('هل أنت متأكد من رفض هذه المدرسة؟')">
-                                                <i class="fas fa-times text-sm"></i>
-                                            </button>
-                                        </form>
+                                        <button type="button" 
+                                                onclick="openRejectModal({{ $school->id }}, '{{ $school->name }}')"
+                                                class="w-8 h-8 bg-red-100 text-red-600 rounded-lg flex items-center justify-center hover:bg-red-200 transition"
+                                                title="رفض">
+                                            <i class="fas fa-times text-sm"></i>
+                                        </button>
                                     @else
                                         @if($school->is_active)
                                             <form action="{{ route('superadmin.schools.suspend', $school) }}" method="POST" class="inline">
@@ -198,11 +194,93 @@
             </table>
         </div>
 
-        @if($schools->hasPages())
+@if($schools->hasPages())
             <div class="px-6 py-4 border-t border-gray-100">
                 {{ $schools->links() }}
             </div>
         @endif
     </div>
 </div>
+
+<!-- Reject Modal -->
+<div id="rejectModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" onclick="closeRejectModal()"></div>
+    <div class="relative bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-bold text-gray-800">رفض طلب المدرسة</h3>
+            <button onclick="closeRejectModal()" class="text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <p class="text-gray-600 mb-4">
+            سيتم رفض طلب المدرسة <strong id="rejectSchoolName" class="text-gray-800"></strong>.
+            يرجى تحديد سبب الرفض:
+        </p>
+
+        <form id="rejectForm" method="POST" action="">
+            @csrf
+            @method('DELETE')
+            <div class="space-y-3 mb-6">
+                <label class="flex items-start gap-3 p-3 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50">
+                    <input type="radio" name="reason" value="بيانات غير مكتملة" class="mt-1">
+                    <span>
+                        <span class="block text-sm font-medium text-gray-800">بيانات غير مكتملة</span>
+                        <span class="block text-xs text-gray-500">نقص في المعلومات المطلوبة</span>
+                    </span>
+                </label>
+                <label class="flex items-start gap-3 p-3 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50">
+                    <input type="radio" name="reason" value="معلومات غير صحيحة" class="mt-1">
+                    <span>
+                        <span class="block text-sm font-medium text-gray-800">معلومات غير صحيحة</span>
+                        <span class="block text-xs text-gray-500">البيانات المدخلة غير صحيحة</span>
+                    </span>
+                </label>
+                <label class="flex items-start gap-3 p-3 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50">
+                    <input type="radio" name="reason" value="مخالف للسياسات" class="mt-1">
+                    <span>
+                        <span class="block text-sm font-medium text-gray-800">مخالف للسياسات</span>
+                        <span class="block text-xs text-gray-500">المدرسة لا تلتزم بسياسات المنصة</span>
+                    </span>
+                </label>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">سبب آخر</label>
+                    <input type="text" name="reason" placeholder="اكتب السبب هنا..."
+                           class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:border-red-500 focus:ring-2 focus:ring-red-100 outline-none">
+                </div>
+            </div>
+
+            <div class="flex gap-3">
+                <button type="button" onclick="closeRejectModal()"
+                        class="flex-1 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 transition">
+                    إلغاء
+                </button>
+                <button type="submit"
+                        class="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-xl hover:bg-red-700 transition">
+                    <i class="fas fa-times ml-2"></i>
+                    تأكيد الرفض
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openRejectModal(schoolId, schoolName) {
+    document.getElementById('rejectSchoolName').textContent = schoolName;
+    document.getElementById('rejectForm').action = '{{ route("superadmin.schools.reject", ":id") }}'.replace(':id', schoolId);
+    document.getElementById('rejectModal').classList.remove('hidden');
+    document.getElementById('rejectModal').classList.add('flex');
+}
+
+function closeRejectModal() {
+    document.getElementById('rejectModal').classList.add('hidden');
+    document.getElementById('rejectModal').classList.remove('flex');
+}
+
+// إغلاق عند الضغط على Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeRejectModal();
+});
+</script>
 @endsection

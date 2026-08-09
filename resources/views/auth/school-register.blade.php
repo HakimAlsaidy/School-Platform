@@ -75,8 +75,18 @@
                 </div>
 
                 <!-- Form -->
-                <form action="{{ route('school.register.store') }}" method="POST" class="space-y-6">
+<form action="{{ route('school.register.store') }}" method="POST" class="space-y-6">
                     @csrf
+
+                    <!-- Honeypot fields - hidden from humans, bots will fill them -->
+                    <div class="hidden" aria-hidden="true">
+                        <label for="website">لا تملأ هذا الحقل</label>
+                        <input type="text" name="website" id="website" tabindex="-1" autocomplete="off">
+                    </div>
+                    <div class="hidden" aria-hidden="true">
+                        <label for="company">لا تملأ هذا الحقل</label>
+                        <input type="text" name="company" id="company" tabindex="-1" autocomplete="off">
+                    </div>
 
                     <!-- Error Message -->
                     @if($errors->has('error'))

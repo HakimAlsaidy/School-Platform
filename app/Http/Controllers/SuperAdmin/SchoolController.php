@@ -181,31 +181,94 @@ class SchoolController extends Controller
             ->with('success', 'تم حذف المدرسة بنجاح');
     }
 
-    public function approve(School $school)
+public function approve(School $school)
     {
         $school->update([
             'is_active' => true,
             'is_verified' => true,
+            'approved_by' => auth()->id(),
+            'approved_at' => now(),
+            'rejection_reason' => null,
         ]);
 
-        // TODO: إرسال إشعار للمدرسة
+        // إشعار مدير المدرسة بالموافقة
+        $adminUser = $school->users()->whereHas('role', fn($q) => $q->where('slug', 'admin'))->first();
+        if ($adminUser) {
+            \App\Models\Notification::create([
+                'school_id' => $school->id,
+                'user_id' => $adminUser->id,
+                'title' => 'تم تفعيل حساب مدرستك 🎉',
+                'message' => "تمت الموافقة على تسجيل مدرسة {$school->name}. يمكنك الآن تسجيل الدخول والبدء في الإدارة.",
+                'type' => 'success',
+                'action_url' => route('login'),
+                'action_text' => 'تسجيل الدخول',
+            ]);
+        }
+
+        \App\Models\ActivityLog::log(
+            action: 'school_approved',
+            description: "تمت الموافقة على مدرسة: {$school->name}",
+            model: $school
+        );
 
         return back()->with('success', 'تم تفعيل المدرسة بنجاح');
     }
 
     public function reject(School $school)
     {
+        $reason = request('reason', 'بيانات غير مكتملة');
+
         $school->update([
             'is_active' => false,
             'is_verified' => false,
+            'rejection_reason' => $reason,
         ]);
+
+        // إشعار مدير المدرسة بالرفض
+        $adminUser = $school->users()->whereHas('role', fn($q) => $q->where('slug', 'admin'))->first();
+        if ($adminUser) {
+            \App\Models\Notification::create([
+                'school_id' => $school->id,
+                'user_id' => $adminUser->id,
+                'title' => 'تم رفض طلب تسجيل مدرستك',
+                'message' => "عذراً، تم رفض طلب تسجيل مدرسة {$school->name}. السبب: {$reason}",
+                'type' => 'danger',
+            ]);
+        }
+
+        \App\Models\ActivityLog::log(
+            action: 'school_rejected',
+            description: "تم رفض مدرسة: {$school->name} - السبب: {$reason}",
+            model: $school
+        );
 
         return back()->with('success', 'تم رفض طلب المدرسة');
     }
 
     public function suspend(School $school)
     {
-        $school->update(['is_active' => false]);
+        $school->update([
+            'is_active' => false,
+            'rejection_reason' => 'تم تعليق المدرسة من قبل الإدارة',
+        ]);
+
+        // إشعار مدير المدرسة بالإيقاف
+        $adminUser = $school->users()->whereHas('role', fn($q) => $q->where('slug', 'admin'))->first();
+        if ($adminUser) {
+            \App\Models\Notification::create([
+                'school_id' => $school->id,
+                'user_id' => $adminUser->id,
+                'title' => 'تم تعليق حساب مدرستك',
+                'message' => "تم تعليق مدرسة {$school->name}. يرجى التواصل مع الإدارة.",
+                'type' => 'danger',
+            ]);
+        }
+
+        \App\Models\ActivityLog::log(
+            action: 'school_suspended',
+            description: "تم تعليق مدرسة: {$school->name}",
+            model: $school
+        );
 
         return back()->with('success', 'تم تعليق المدرسة');
     }

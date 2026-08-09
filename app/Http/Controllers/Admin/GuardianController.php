@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
 use App\Models\Guardian;
+use App\Models\Notification;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -146,9 +147,12 @@ class GuardianController extends Controller
             ->with('success', 'تم حذف ولي الأمر بنجاح.');
     }
 
-    public function pending()
+public function pending()
     {
+        $schoolId = auth()->user()->school_id;
+
         $pendingUsers = User::where('is_active', false)
+            ->where('school_id', $schoolId) // طلبات مدرسة المدير فقط
             ->whereHas('role', function ($q) {
                 $q->whereIn('slug', [Role::TEACHER, Role::PARENT]);
             })
@@ -161,7 +165,23 @@ class GuardianController extends Controller
 
     public function approve(User $user)
     {
+        // التحقق من أن المستخدم ينتمي لنفس مدرسة المدير
+        if ($user->school_id !== auth()->user()->school_id) {
+            abort(403, 'لا يمكنك الموافقة على هذا الطلب لأنه من مدرسة أخرى.');
+        }
+
         $user->update(['is_active' => true]);
+
+        // إشعار المستخدم بأن حسابه تم تفعيله
+        $roleName = $user->isTeacher() ? 'معلم' : 'ولي أمر';
+        Notification::send(
+            userId: $user->id,
+            title: 'تم تفعيل حسابك',
+            message: "أهلاً {$user->name}! تمت الموافقة على طلب تسجيلك كـ {$roleName}. يمكنك الآن تسجيل الدخول.",
+            type: 'success',
+            actionUrl: route('login'),
+            actionText: 'تسجيل الدخول'
+        );
 
         $redirectToEdit = request()->input('action') === 'approve_and_edit';
 
@@ -173,6 +193,7 @@ class GuardianController extends Controller
                 [
                     'phone' => $user->phone,
                     'specialization' => null,
+                    'school_id' => $user->school_id,
                     'hire_date' => now(),
                 ]
             );
@@ -194,6 +215,7 @@ class GuardianController extends Controller
                 [
                     'phone' => $user->phone,
                     'relationship' => null,
+                    'school_id' => $user->school_id,
                 ]
             );
             
@@ -215,6 +237,11 @@ class GuardianController extends Controller
 
     public function reject(User $user)
     {
+        // التحقق من أن المستخدم ينتمي لنفس مدرسة المدير
+        if ($user->school_id !== auth()->user()->school_id) {
+            abort(403, 'لا يمكنك رفض هذا الطلب لأنه من مدرسة أخرى.');
+        }
+
         $name = $user->name;
         $user->delete();
 

@@ -104,6 +104,30 @@
                     @enderror
                 </div>
                 
+<div>
+                    <label for="school_id" class="block text-sm font-medium text-gray-700 mb-2">المدرسة</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400">
+                            <i class="fas fa-school"></i>
+                        </span>
+                        <select id="school_id" name="school_id" required
+                            class="w-full pr-12 pl-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition appearance-none @error('school_id') border-red-500 @enderror">
+                            <option value="">اختر المدرسة</option>
+                            @foreach($schools as $school)
+                                <option value="{{ $school->id }}" {{ old('school_id') == $school->id ? 'selected' : '' }}>
+                                    {{ $school->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 pointer-events-none">
+                            <i class="fas fa-chevron-down"></i>
+                        </span>
+                    </div>
+                    @error('school_id')
+                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+                
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700 mb-2">كلمة المرور</label>
                     <div class="relative">

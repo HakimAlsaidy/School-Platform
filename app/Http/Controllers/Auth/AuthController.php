@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
+use App\Models\Notification;
+use App\Models\Role;
+use App\Models\School;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -55,9 +58,12 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 
-    public function showRegisterForm()
+public function showRegisterForm()
     {
-        return view('auth.register');
+        // جلب المدارس النشطة لعرضها في نموذج التسجيل
+        $schools = School::active()->verified()->orderBy('name')->get();
+
+        return view('auth.register', compact('schools'));
     }
 
     public function register(Request $request)
@@ -67,22 +73,43 @@ class AuthController extends Controller
             'phone' => ['required', 'string', 'max:20', 'unique:users,phone'],
             'password' => ['required', 'confirmed', Password::defaults()],
             'role' => ['required', 'in:teacher,parent'],
+            'school_id' => ['required', 'exists:schools,id'],
         ]);
 
-        $roleId = \App\Models\Role::where('slug', $validated['role'])->first()?->id;
+        $roleId = Role::where('slug', $validated['role'])->first()?->id;
 
         $user = User::create([
             'name' => $validated['name'],
             'phone' => $validated['phone'],
             'password' => Hash::make($validated['password']),
             'role_id' => $roleId,
-            'is_active' => false, // يحتاج موافقة الإدارة
+            'school_id' => $validated['school_id'], // المدرسة التي اختارها المستخدم
+            'is_active' => false, // يحتاج موافقة إدارة المدرسة المختارة
         ]);
 
         ActivityLog::log('register', 'تسجيل مستخدم جديد', $user, $user->id);
 
+        // إرسال إشعار لمديري المدرسة المختارة بطلب التسجيل الجديد
+        $roleName = $user->isTeacher() ? 'معلم' : 'ولي أمر';
+        $school = School::find($validated['school_id']);
+        $admins = User::where('school_id', $validated['school_id'])
+            ->whereHas('role', fn($q) => $q->where('slug', Role::ADMIN))
+            ->where('is_active', true)
+            ->get();
+
+        foreach ($admins as $admin) {
+            Notification::send(
+                userId: $admin->id,
+                title: 'طلب تسجيل جديد',
+                message: "{$user->name} طلب التسجيل كـ {$roleName} في {$school->name}",
+                type: 'info',
+                actionUrl: route('admin.pending-users'),
+                actionText: 'مراجعة الطلب'
+            );
+        }
+
         return redirect()->route('login')
-            ->with('success', 'تم إنشاء حسابك بنجاح. يرجى انتظار موافقة الإدارة.');
+            ->with('success', 'تم إنشاء حسابك بنجاح. سيتم إشعار إدارة المدرسة بطلبك، ويمكنك تسجيل الدخول بعد الموافقة.');
     }
 
     public function showForgotPasswordForm()

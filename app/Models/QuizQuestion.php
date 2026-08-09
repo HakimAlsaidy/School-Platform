@@ -25,9 +25,14 @@ class QuizQuestion extends Model
         'options' => 'array',
     ];
 
-    public function quiz(): BelongsTo
+public function quiz(): BelongsTo
     {
         return $this->belongsTo(OnlineQuiz::class, 'online_quiz_id');
+    }
+
+    public function questionBank(): BelongsTo
+    {
+        return $this->belongsTo(QuestionBank::class, 'question_bank_id');
     }
 
     public static array $typeLabels = [

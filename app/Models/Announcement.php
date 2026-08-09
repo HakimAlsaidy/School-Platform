@@ -11,13 +11,14 @@ class Announcement extends Model
 {
     use HasFactory, UsesSchoolSchema;
 
-    protected $fillable = [
+protected $fillable = [
         'school_id',
         'author_id',
         'title',
         'content',
-        'target_audience',
+        'target',
         'is_active',
+        'is_pinned',
         'published_at',
         'expires_at',
     ];

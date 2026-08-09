@@ -21,8 +21,10 @@ class ExtraDataSeeder extends Seeder
         $parentRole = Role::where('slug', 'parent')->first();
         $adminUser = User::where('phone', '0500000002')->first()
             ?? User::where('email', 'admin@schoolpla.com')->first();
-        $parentUsers = User::where('role_id', $parentRole ? $parentRole->id : 0)
+$parentUsers = User::where('role_id', $parentRole ? $parentRole->id : 0)
             ->where('is_active', true)->get();
+        $school = \App\Models\School::where('subdomain', 'demo')->first();
+        $schoolId = $school ? $school->id : null;
 
         if (!$adminUser) {
             echo "❌ لا يوجد مستخدم Admin. شغّل AccountsSeeder أولاً.\n";
@@ -98,12 +100,13 @@ class ExtraDataSeeder extends Seeder
 
         foreach ($pendingUsers as $data) {
             if (!User::where('email', $data['email'])->exists()) {
-                User::create([
+User::create([
                     'name' => $data['name'],
                     'email' => $data['email'],
                     'password' => Hash::make('password'),
                     'phone' => $data['phone'],
                     'role_id' => $data['role_id'],
+                    'school_id' => $school ? $school->id : null,
                     'is_active' => false,
                 ]);
             }

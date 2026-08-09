@@ -14,10 +14,31 @@ class Subject extends Model
 
     protected $fillable = ['school_id', 'name', 'code', 'description', 'color', 'is_global'];
 
-    public function teachers(): BelongsToMany
+public function teachers(): BelongsToMany
     {
         return $this->belongsToMany(Teacher::class, 'teacher_subject')
                     ->withTimestamps();
+    }
+
+    public function grades(): BelongsToMany
+    {
+        return $this->belongsToMany(Grade::class, 'grade_subject')
+                    ->withTimestamps();
+    }
+
+    public function quizzes(): HasMany
+    {
+        return $this->hasMany(OnlineQuiz::class);
+    }
+
+    public function questionBanks(): HasMany
+    {
+        return $this->hasMany(QuestionBank::class);
+    }
+
+    public function materials(): HasMany
+    {
+        return $this->hasMany(ClassroomMaterial::class);
     }
 
     public function scores(): HasMany

@@ -83,7 +83,7 @@ class School extends Model
         return $this->hasMany(Student::class);
     }
 
-    public function announcements(): HasMany
+public function announcements(): HasMany
     {
         return $this->hasMany(Announcement::class);
     }
@@ -91,6 +91,141 @@ class School extends Model
     public function subscriptions(): HasMany
     {
         return $this->hasMany(SchoolSubscription::class);
+    }
+
+    // ==========================================
+    // العلاقات الأكاديمية
+    // ==========================================
+
+    public function schedules(): HasMany
+    {
+        return $this->hasMany(Schedule::class);
+    }
+
+    public function scores(): HasMany
+    {
+        return $this->hasMany(Score::class);
+    }
+
+    public function attendances(): HasMany
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function behaviors(): HasMany
+    {
+        return $this->hasMany(Behavior::class);
+    }
+
+    public function assignments(): HasMany
+    {
+        return $this->hasMany(Assignment::class);
+    }
+
+    public function assignmentSubmissions(): HasMany
+    {
+        return $this->hasMany(AssignmentSubmission::class);
+    }
+
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class);
+    }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    // ==========================================
+    // العلاقات المالية
+    // ==========================================
+
+    public function fees(): HasMany
+    {
+        return $this->hasMany(Fee::class);
+    }
+
+    public function studentFees(): HasMany
+    {
+        return $this->hasMany(StudentFee::class);
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function expenses(): HasMany
+    {
+        return $this->hasMany(Expense::class);
+    }
+
+    public function incomes(): HasMany
+    {
+        return $this->hasMany(Income::class);
+    }
+
+    // ==========================================
+    // العلاقات المكتبية
+    // ==========================================
+
+    public function books(): HasMany
+    {
+        return $this->hasMany(Book::class);
+    }
+
+    public function bookLoans(): HasMany
+    {
+        return $this->hasMany(BookLoan::class);
+    }
+
+    // ==========================================
+    // العلاقات النقل المدرسي
+    // ==========================================
+
+    public function buses(): HasMany
+    {
+        return $this->hasMany(Bus::class);
+    }
+
+    public function transportRoutes(): HasMany
+    {
+        return $this->hasMany(TransportRoute::class);
+    }
+
+    public function transportStudents(): HasMany
+    {
+        return $this->hasMany(TransportStudent::class);
+    }
+
+    // ==========================================
+    // العلاقات الاختبارات الإلكترونية
+    // ==========================================
+
+    public function questionBanks(): HasMany
+    {
+        return $this->hasMany(QuestionBank::class);
+    }
+
+    public function quizzes(): HasMany
+    {
+        return $this->hasMany(OnlineQuiz::class);
+    }
+
+    public function quizAttempts(): HasMany
+    {
+        return $this->hasMany(QuizAttempt::class);
+    }
+
+    public function classroomMaterials(): HasMany
+    {
+        return $this->hasMany(ClassroomMaterial::class);
     }
 
     // ==========================================
